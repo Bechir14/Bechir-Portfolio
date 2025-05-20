@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import {
   Box,
   Container,
@@ -100,14 +100,16 @@ const darkTheme = createTheme({
   },
 });
 
-const MotionBox = motion(Box);
-const MotionTypography = motion(Typography);
-const MotionCard = motion(Card);
-const MotionChip = motion(Chip);
+const MotionBox = motion.create(Box);
+const MotionTypography = motion.create(Typography);
+const MotionCard = motion.create(Card);
+const MotionChip = motion.create(Chip);
 
 const Portfolio = () => {
   const theme = darkTheme;
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const sections = ["about", "projects", "skills", "contact"];
+  const sectionsRef = sections.map(() => React.createRef());
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -118,6 +120,9 @@ const Portfolio = () => {
     serviceId: "service_vfr9cpb",
     templateId: "template_phka74n",
     publicKey: "1EQEWRoYAplK4EmUI",
+  };
+  const handleScroll = (ref) => {
+    ref.current.scrollIntoView({ behavior: "smooth" });
   };
 
   const handleFormChange = (e) => {
@@ -142,10 +147,8 @@ const Portfolio = () => {
         },
         emailjsCreds.publicKey
       );
-
-      console.log("SUCCESS!", result.status, result.text);
     } catch (error) {
-      console.error("FAILED...", error);
+      //   console.error("FAILED...", error);
     }
     setFormData({
       name: "",
@@ -197,22 +200,6 @@ const Portfolio = () => {
       github: "#",
       demo: "#",
     },
-    // {
-    //   title: "Portfolio Website",
-    //   description:
-    //     "Modern, responsive portfolio website built with React and Material-UI featuring animations with Framer Motion and a clean, professional design.",
-    //   tech: ["React", "MUI", "Framer Motion", "CSS"],
-    //   github: "#",
-    //   demo: "#",
-    // },
-    // {
-    //   title: "Task Management App",
-    //   description:
-    //     "Productivity application for managing tasks and projects with features like drag-and-drop, notifications, and collaboration tools.",
-    //   tech: ["React", "Redux", "Django", "Firebase"],
-    //   github: "#",
-    //   demo: "#",
-    // },
   ];
 
   return (
@@ -278,13 +265,28 @@ const Portfolio = () => {
             >
               <Stack direction="row" spacing={2} justifyContent="center">
                 <IconButton size="large" color="inherit">
-                  <GitHubIcon fontSize="large" />
+                  <a
+                    href="https://github.com/Bechir14"
+                    target="_blank"
+                    style={{ textDecoration: "none", color: "inherit" }}
+                  >
+                    <GitHubIcon fontSize="large" />
+                  </a>
                 </IconButton>
                 <IconButton size="large" color="inherit">
-                  <LinkedInIcon fontSize="large" />
+                  <a
+                    href="https://www.linkedin.com/in/mebnou14/"
+                    target="_blank"
+                    style={{ textDecoration: "none", color: "inherit" }}
+                  >
+                    <LinkedInIcon fontSize="large" />
+                  </a>
                 </IconButton>
                 <IconButton size="large" color="inherit">
-                  <EmailIcon fontSize="large" />
+                  <EmailIcon
+                    fontSize="large"
+                    onClick={() => handleScroll(sectionsRef[3])}
+                  />
                 </IconButton>
               </Stack>
             </MotionBox>
@@ -296,13 +298,17 @@ const Portfolio = () => {
             transition={{ delay: 1.2, duration: 1.5, repeat: Infinity }}
           >
             <IconButton color="inherit" size="large" aria-label="scroll down">
-              <ArrowDownwardIcon fontSize="large" />
+              <ArrowDownwardIcon
+                fontSize="large"
+                onClick={() => handleScroll(sectionsRef[0])}
+              />
             </IconButton>
           </MotionBox>
         </MotionBox>
 
         {/* About Section */}
         <Box
+          ref={sectionsRef[0]}
           component="section"
           sx={{ py: { xs: 8, md: 12 }, bgcolor: "background.paper" }}
         >
@@ -476,6 +482,7 @@ const Portfolio = () => {
 
         {/* Skills Section */}
         <Box
+          ref={sectionsRef[2]}
           component="section"
           sx={{ py: { xs: 8, md: 12 }, bgcolor: "background.paper" }}
         >
@@ -713,6 +720,7 @@ const Portfolio = () => {
 
         {/* Projects Section */}
         <Box
+          ref={sectionsRef[1]}
           component="section"
           sx={{ py: { xs: 8, md: 12 }, bgcolor: "background.paper" }}
         >
@@ -969,6 +977,7 @@ const Portfolio = () => {
 
         {/* Contact Section */}
         <Box
+          ref={sectionsRef[3]}
           component="section"
           sx={{ py: { xs: 8, md: 12 }, bgcolor: "background.paper" }}
         >
@@ -1142,16 +1151,40 @@ const Portfolio = () => {
                   Quick Links
                 </Typography>
                 <Stack direction="row" spacing={2} flexWrap="wrap" useFlexGap>
-                  <Button color="inherit" sx={{ minWidth: 100 }}>
+                  <Button
+                    color="inherit"
+                    sx={{ minWidth: 100 }}
+                    onClick={() => {
+                      handleScroll(sectionsRef[0]);
+                    }}
+                  >
                     About
                   </Button>
-                  <Button color="inherit" sx={{ minWidth: 100 }}>
+                  <Button
+                    color="inherit"
+                    sx={{ minWidth: 100 }}
+                    onClick={() => {
+                      handleScroll(sectionsRef[1]);
+                    }}
+                  >
                     Projects
                   </Button>
-                  <Button color="inherit" sx={{ minWidth: 100 }}>
+                  <Button
+                    color="inherit"
+                    sx={{ minWidth: 100 }}
+                    onClick={() => {
+                      handleScroll(sectionsRef[2]);
+                    }}
+                  >
                     Skills
                   </Button>
-                  <Button color="inherit" sx={{ minWidth: 100 }}>
+                  <Button
+                    color="inherit"
+                    sx={{ minWidth: 100 }}
+                    onClick={() => {
+                      handleScroll(sectionsRef[3]);
+                    }}
+                  >
                     Contact
                   </Button>
                 </Stack>
