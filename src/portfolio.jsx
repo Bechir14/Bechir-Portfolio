@@ -256,7 +256,7 @@ const Portfolio = () => {
               transition={{ delay: 0.6, duration: 0.8 }}
               sx={{ mb: 4 }}
             >
-              Full-Stack Developer
+              Full-Stack Jr.Developer
             </MotionTypography>
             <MotionBox
               initial={{ y: 20, opacity: 0 }}
@@ -1142,8 +1142,8 @@ const Portfolio = () => {
                   Bechir Ebnou
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                  Full-Stack Developer based in Istanbul, Turkey. Specializing
-                  in building exceptional digital experiences.
+                  Full-Stack Jr.Developer based in Istanbul, Turkey.
+                  Specializing in building exceptional digital experiences.
                 </Typography>
               </Box>
               <Box sx={{ flex: 1 }}>
